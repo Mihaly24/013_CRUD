@@ -45,7 +45,7 @@ app.post('/api/users', (req, res) => {
     const { nama, nim, kelas } = req.body;
 
     if (!nama || !nim || !kelas) {
-        return res.status(400).json({ error: 'Tolong isi nama, nim, and kelas' });
+        return res.status(400).json({ error: 'Tolong isi nama, NIM, dan kelas' });
     }
 
     db.query(
@@ -57,6 +57,22 @@ app.post('/api/users', (req, res) => {
                 return res.status(500).json({ message: 'Database Error' });
             }
             res.status(201).json({ message: 'User added successfully'});
+        }
+    );
+});
+
+app.put('/api/users/:id', (req, res) => {
+    const userId = req.params.id;
+    const { nama, nim, kelas } = req.body;
+    db.query(
+        'UPDATE mahasiswa SET nama = ?, nim = ?, kelas = ? WHERE id = ?',
+        [nama, nim, kelas, userId],
+        (err, results) => {
+            if (err) {
+                console.error(err);
+                return res.status(500).json({ message: 'Database Error' });
+            }
+            res.json({ message: 'User updated successfully' });
         }
     );
 });
