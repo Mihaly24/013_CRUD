@@ -54,9 +54,9 @@ app.post('/api/users', (req, res) => {
         (err, results) => {
             if (err) {
                 console.error(err);
-                return res.status(500).json({ error: 'Error inserting user' });
+                return res.status(500).json({ message: 'Database Error' });
             }
-            res.status(201).json({ message: 'User added successfully', userId: results.insertId });
+            res.status(201).json({ message: 'User added successfully'});
         }
     );
 });
