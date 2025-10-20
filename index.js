@@ -29,3 +29,14 @@ db.connect((err) => {
     }
     console.log('Connected to Database');
 });
+
+app.get('api/users', (req, res) => {
+    db.query('SELECT * FROM users', (err, results) => {
+        if (err) {
+            console.error('Error executing query:', err.stack);
+            req.statusCode(500).json({ error: 'Error fetching users:' });
+            return;
+        }
+        res.json(results);
+    })
+});
