@@ -30,7 +30,7 @@ db.connect((err) => {
     console.log('Connected to Database');
 });
 
-app.get('api/users', (req, res) => {
+app.get('/api/users', (req, res) => {
     db.query('SELECT * FROM mahasiswa', (err, results) => {
         if (err) {
             console.error('Error executing query:', err.stack);
