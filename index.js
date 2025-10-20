@@ -40,3 +40,23 @@ app.get('api/users', (req, res) => {
         res.json(results);
     })
 });
+
+app.post('/api/users', (req, res) => {
+    const { nama, nim, kelas } = req.body;
+
+    if (!nama || !nim || !kelas) {
+        return res.status(400).json({ error: 'Tolong isi nama, nim, and kelas' });
+    }
+
+    db.query(
+        'INSERT INTO users (nama, nim, kelas) VALUES (?, ?, ?)',
+        [nama, nim, kelas],
+        (err, results) => {
+            if (err) {
+                console.error(err);
+                return res.status(500).json({ error: 'Error inserting user' });
+            }
+            res.status(201).json({ message: 'User added successfully', userId: results.insertId });
+        }
+    );
+});
